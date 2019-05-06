@@ -1,6 +1,23 @@
-import { Server, Route, Routes } from "../src/fari";
+import { Server, Route } from "../src/fari";
+
+function getTest(id: string): any {
+    if (id === "12") {
+        return { Test: "Test" };
+    }
+    return null;
+}
+
+function getTest2(id: string): any {
+    if (id === "11") {
+        return { Test: "Test" };
+    }
+    return null;
+}
 
 async function main() {
-    const server = new Server("0.0.0.0:8080");
-    server.addRoutes();
+    const routes = new Array<Route>();
+    routes.push(new Route("/test", getTest));
+    const server = new Server("0.0.0.0:8080", routes);
+    server.addRoutes(new Route("/test2", getTest2));
+    server.run();
 }

@@ -2,7 +2,6 @@ import Route from "./Route.ts";
 import HttpRequest from "./HttpRequest.ts";
 
 const { listen } = Deno;
-const response = new TextEncoder().encode("HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello World\n");
 
 export class Server {
     private _addr: string;
@@ -10,8 +9,18 @@ export class Server {
 
     constructor(addr: string, routes?: Array<Route>) {
         this._addr = addr;
-        this._routes = routes;
+        if (routes) {
+            this._routes = routes;
+        } else {
+            this._routes = [
+                new Route("/", () => {
+                    new TextEncoder().encode("HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello World\n");
+                })
+            ];
+        }
     }
+
+    private async _runFunc(data: string, func: object): Promise<void> {}
 
     private async _handle(conn: Deno.Conn): Promise<void> {
         const buffer = new Uint8Array(1024);
@@ -19,10 +28,17 @@ export class Server {
             while (true) {
                 const r = await conn.read(buffer);
                 const req = new HttpRequest(buffer);
-                if (r.eof) {
-                    break;
-                }
-                await conn.write(response);
+                const route = this.findRoute(req.route());
+
+                // if route === null
+
+                // if input type missmatch
+
+                // run route
+
+                // send response
+
+                // await conn.write(response);
             }
         } catch (e) {
             throw e;
@@ -40,10 +56,18 @@ export class Server {
     }
 
     addRoute(route: Route): void {
+        const existing = this._routes.find(x => x.path() === route.path());
+        if (existing) throw `Route: '${route.path()}' already added`;
         this._routes.push(route);
     }
 
     addRoutes(routes: Array<Route>): void {
-        this._routes = { ...this._routes, ...routes };
+        routes.forEach(route => {
+            this.addRoute(route);
+        });
+    }
+
+    findRoute(path: string): Route {
+        return this._routes.find(route => route.path() === path);
     }
 }

@@ -1,5 +1,4 @@
-import RequestType from "./RequestType.ts";
-import RequestProtocol from "./RequestProtocol.ts";
+import { RequestType, RequestProtocol } from "../enums/mod";
 
 export class HttpRequest {
     private _type: RequestType;
@@ -11,16 +10,6 @@ export class HttpRequest {
     private _accept: string;
     private _encoding: string;
     private _language: string;
-
-    constructor(message: Uint8Array) {
-        message = message.filter(part => !!part);
-        const res = new TextDecoder("utf-8").decode(message).split("\r\n");
-        const head = res[0].split(" ");
-        this._type = RequestType[head[0]];
-        this._route = head[1];
-        this._protocol = RequestProtocol[head[2].replace(/[\/\.]/g, "")];
-        console.log(res);
-    }
 
     get type(): RequestType {
         return this._type;
@@ -56,5 +45,15 @@ export class HttpRequest {
 
     get language(): string {
         return this._language;
+    }
+
+    constructor(message: Uint8Array) {
+        message = message.filter(part => !!part);
+        const res = new TextDecoder("utf-8").decode(message).split("\r\n");
+        const head = res[0].split(" ");
+        this._type = RequestType[head[0]];
+        this._route = head[1];
+        this._protocol = RequestProtocol[head[2].replace(/[\/\.]/g, "")];
+        console.log(res);
     }
 }
