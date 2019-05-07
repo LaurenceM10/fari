@@ -1,4 +1,4 @@
-enum StatusCode {
+enum HttpStatusCode {
     Continue = "100/Continue",
     SwitchingProtocols = "101/Switching Protocols",
     Processing = "102/Processing",
@@ -62,4 +62,4 @@ enum StatusCode {
     NetworkAuthenticationRequired = "511/Network Authentication Required"
 }
 
-export default StatusCode;
+export default HttpStatusCode;

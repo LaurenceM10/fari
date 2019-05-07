@@ -1,8 +1,8 @@
-import { RequestProtocol, StatusCode } from "../enums/mod.ts";
+import { RequestProtocol, HttpStatusCode } from "../enums/mod.ts";
 
 export default class HttpRequest {
     private _protocol: RequestProtocol;
-    private _status: StatusCode;
+    private _status: HttpStatusCode;
     private _contentLength: string;
     private _content: string;
 
@@ -14,11 +14,11 @@ export default class HttpRequest {
         this._protocol = protocol;
     }
 
-    get status(): StatusCode {
+    get status(): HttpStatusCode {
         return this._status;
     }
 
-    set status(status: StatusCode) {
+    set status(status: HttpStatusCode) {
         this._status = status;
     }
 
