@@ -1,2 +1,2 @@
-export { Server } from "./types/Server.ts";
-export { Route } from "./types/Route.ts";
+export { default as Server } from "./types/Server.ts";
+export { default as Route } from "./types/Route.ts";

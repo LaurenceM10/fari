@@ -1,4 +1,4 @@
-export class Route {
+export default class Route {
     private _path: string;
     private _func: object;
 

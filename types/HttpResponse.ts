@@ -1,6 +1,6 @@
-import { RequestProtocol, StatusCode } from "../enums/mod";
+import { RequestProtocol, StatusCode } from "../enums/mod.ts";
 
-export class HttpRequest {
+export default class HttpRequest {
     private _protocol: RequestProtocol;
     private _status: StatusCode;
     private _contentLength: string;
@@ -11,6 +11,6 @@ export class HttpRequest {
     }
 
     constructor(protocol: RequestProtocol) {
-        this._status = StatusCode["Non-Authoritative"];
+        this._status = StatusCode.BadRequest;
     }
 }

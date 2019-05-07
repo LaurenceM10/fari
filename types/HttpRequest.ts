@@ -1,6 +1,6 @@
-import { RequestType, RequestProtocol } from "../enums/mod";
+import { RequestType, RequestProtocol } from "../enums/mod.ts";
 
-export class HttpRequest {
+export default class HttpRequest {
     private _type: RequestType;
     private _protocol: RequestProtocol;
     private _route: string;

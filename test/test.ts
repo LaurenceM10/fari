@@ -1,4 +1,4 @@
-import { Server, Route } from "../src/fari";
+import { Server, Route } from "../mod.ts";
 
 function getTest(id: string): any {
     if (id === "12") {
@@ -18,6 +18,6 @@ async function main() {
     const routes = new Array<Route>();
     routes.push(new Route("/test", getTest));
     const server = new Server("0.0.0.0:8080", routes);
-    server.addRoutes(new Route("/test2", getTest2));
+    server.addRoute(new Route("/test2", getTest2));
     server.run();
 }

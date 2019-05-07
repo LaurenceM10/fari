@@ -3,7 +3,7 @@ import HttpRequest from "./HttpRequest.ts";
 
 const { listen } = Deno;
 
-export class Server {
+export default class Server {
     private _addr: string;
     private _routes: Array<Route>;
 
@@ -28,7 +28,7 @@ export class Server {
             while (true) {
                 const r = await conn.read(buffer);
                 const req = new HttpRequest(buffer);
-                const route = this.findRoute(req.route());
+                const route = this.findRoute(req.route);
 
                 // if route === null
 
@@ -56,8 +56,7 @@ export class Server {
     }
 
     addRoute(route: Route): void {
-        const existing = this._routes.find(x => x.path() === route.path());
-        if (existing) throw `Route: '${route.path()}' already added`;
+        if (this.findRoute(route.path)) throw `Route: '${route.path}' already added`;
         this._routes.push(route);
     }
 
@@ -68,6 +67,6 @@ export class Server {
     }
 
     findRoute(path: string): Route {
-        return this._routes.find(route => route.path() === path);
+        return this._routes.find(route => route.path === path);
     }
 }
