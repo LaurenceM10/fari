@@ -1,4 +1,4 @@
-import { Server, Route } from "../mod.ts";
+import { Server, Route, RequestType } from "../mod.ts";
 
 function getTest(id: string): any {
     if (id === "12") {
@@ -14,10 +14,10 @@ function getTest2(id: string): any {
     return null;
 }
 
-async function main() {
+(() => {
     const routes = new Array<Route>();
-    routes.push(new Route("/test", getTest));
+    routes.push(new Route("/test", RequestType.GET, getTest));
     const server = new Server("0.0.0.0:8080", routes);
-    server.addRoute(new Route("/test2", getTest2));
+    server.addRoute(new Route("/test2", RequestType.POST, getTest2));
     server.run();
-}
+})();

@@ -10,7 +10,40 @@ export default class HttpRequest {
         return this._protocol;
     }
 
-    constructor(protocol: RequestProtocol) {
-        this._status = StatusCode.BadRequest;
+    set protocol(protocol: RequestProtocol) {
+        this._protocol = protocol;
+    }
+
+    get status(): StatusCode {
+        return this._status;
+    }
+
+    set status(status: StatusCode) {
+        this._status = status;
+    }
+
+    get contentLength(): string {
+        return this._contentLength;
+    }
+
+    get content(): string {
+        return this._content;
+    }
+
+    set content(content: string) {
+        this._contentLength = content.length.toString();
+        this._content = content;
+    }
+
+    constructor() {}
+
+    toResponseString() {
+        return `${this._protocol} ${this._status.split("/")[0]} ${this._status.split("/")[1]}\r\nContent-Length: ${this._contentLength}\r\n\r\n${
+            this._content
+        }\n`;
+    }
+
+    toUint8Array() {
+        return new TextEncoder().encode(this.toResponseString());
     }
 }

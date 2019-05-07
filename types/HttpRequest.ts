@@ -54,6 +54,5 @@ export default class HttpRequest {
         this._type = RequestType[head[0]];
         this._route = head[1];
         this._protocol = RequestProtocol[head[2].replace(/[\/\.]/g, "")];
-        console.log(res);
     }
 }

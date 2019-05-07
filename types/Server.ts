@@ -1,5 +1,7 @@
 import Route from "./Route.ts";
 import HttpRequest from "./HttpRequest.ts";
+import HttpResponse from "./HttpResponse.ts";
+import { RequestType, StatusCode } from "../enums/mod.ts";
 
 const { listen } = Deno;
 
@@ -13,7 +15,7 @@ export default class Server {
             this._routes = routes;
         } else {
             this._routes = [
-                new Route("/", () => {
+                new Route("/", RequestType.GET, () => {
                     new TextEncoder().encode("HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello World\n");
                 })
             ];
@@ -24,13 +26,19 @@ export default class Server {
 
     private async _handle(conn: Deno.Conn): Promise<void> {
         const buffer = new Uint8Array(1024);
+        const response = new HttpResponse();
         try {
             while (true) {
                 const r = await conn.read(buffer);
                 const req = new HttpRequest(buffer);
-                const route = this.findRoute(req.route);
+                response.protocol = req.protocol;
+                const route = this.findRoute(req.route, req.type);
 
-                // if route === null
+                if (!route) {
+                    response.status = StatusCode.NotFound;
+                    await conn.write(response.toUint8Array());
+                    break;
+                }
 
                 // if input type missmatch
 
@@ -41,7 +49,9 @@ export default class Server {
                 // await conn.write(response);
             }
         } catch (e) {
-            throw e;
+            response.status = StatusCode.InternalServerError;
+            response.content = e.toString();
+            await conn.write(response.toUint8Array());
         } finally {
             conn.close();
         }
@@ -56,7 +66,7 @@ export default class Server {
     }
 
     addRoute(route: Route): void {
-        if (this.findRoute(route.path)) throw `Route: '${route.path}' already added`;
+        if (this.findRoute(route.path, route.requestType)) throw `Route: '${route.path}' already added`;
         this._routes.push(route);
     }
 
@@ -66,7 +76,7 @@ export default class Server {
         });
     }
 
-    findRoute(path: string): Route {
-        return this._routes.find(route => route.path === path);
+    findRoute(path: string, requestType: RequestType): Route {
+        return this._routes.find(route => route.path === path && route.requestType === requestType);
     }
 }
