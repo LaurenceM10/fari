@@ -16,7 +16,7 @@ A [deno](http://deno.land) HTTP/REST server
 
 ```javascript
 
-import { Server, Route } from "https://deno.land/std/fari/mod.ts";
+import { Server, Route, RequestType } from "https://deno.land/std/fari/mod.ts";
 
 function getTest(id: string): any {
     if (id === "12") {
@@ -27,7 +27,7 @@ function getTest(id: string): any {
 
 (async () => {
     const routes = new Array<Route>();
-    routes.push(new Route("/test", getTest));
+    routes.push(new Route("/test", RequestType.GET, getTest));
     const server = new Server("0.0.0.0:8080", routes);
     server.run();
 })()
