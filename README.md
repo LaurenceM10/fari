@@ -44,16 +44,16 @@ class Demo {
     function getDemo(@HttpRoute({ urlParams: ['id'] }) args: []){
     }
 
-    @HttpRoute({{method:'PUT', url: '/demo'})
-    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
+    @Route({method:'PUT', url: '/demo'})
+    function createDemo(@Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
 
-    @HttpRoute({{method:'POST', url: '/demo?ex={ex}'})
-    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
+    @Route({method:'POST', url: '/demo?ex={ex}'})
+    function updateDemo(@Route({ queryParams: ['ex']}) args: [], @Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
 
-    @HttpRoute({{method:'DELETE', url: '/demo/{id}'})
-    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []){
+    @Route({method:'DELETE', url: '/demo/{id}'})
+    function deleteDemo(@Route({ urlParams: ['id'] }) args: []){
     }
 }
 
