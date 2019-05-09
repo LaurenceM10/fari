@@ -25,10 +25,10 @@ See [http://blog.wolksoftware.com/decorators-reflection-javascript-typescript](h
 `main.ts`:
 
 ```javascript
-import { server } from 'fari'
+import Fari from 'fari'
 
 (() => {
-    server.listen('0.0.0.0:8080');
+    Fari.server.listen('0.0.0.0:8080');
     // May follow some additional settings
 })()
 ```
@@ -37,23 +37,23 @@ import { server } from 'fari'
 
 ```javascript
 
-@Route
+@HttpRoute
 class Demo {
 
-    @Route({method:'GET', url: '/demo/{id}'})
-    function getDemo(@Route({ urlParams: ['id'] }) args: []){
+    @HttpRoute({method:'GET', url: '/demo/{id}'})
+    function getDemo(@HttpRoute({ urlParams: ['id'] }) args: []){
     }
 
-    @Route({{method:'PUT', url: '/demo'})
-    function createDemo(@Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
+    @HttpRoute({{method:'PUT', url: '/demo'})
+    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
 
-    @Route({{method:'POST', url: '/demo?ex={ex}'})
-    function updateDemo(@Route({ queryParams: ['ex']}) args: [], @Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
+    @HttpRoute({{method:'POST', url: '/demo?ex={ex}'})
+    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
 
-    @Route({{method:'DELETE', url: '/demo/{id}'})
-    function deleteDemo(@Route({ urlParams: ['id'] }) args: []){
+    @HttpRoute({{method:'DELETE', url: '/demo/{id}'})
+    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []){
     }
 }
 
