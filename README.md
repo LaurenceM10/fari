@@ -26,6 +26,7 @@ import { server } from 'fari'
 
 (() => {
     server.listen('0.0.0.0:8080');
+    // May follow some additional settings
 })()
 ```
 
