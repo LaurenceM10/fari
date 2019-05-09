@@ -2,6 +2,8 @@ import Route from "./Route.ts";
 import HttpRequest from "./HttpRequest.ts";
 import HttpResponse from "./HttpResponse.ts";
 import { RequestType, StatusCode } from "../enums/mod.ts";
+import {Service} from "../ServiceDecorator";
+import {Injector} from '../Injector';
 
 const { listen } = Deno;
 
@@ -80,3 +82,29 @@ export default class Server {
         return this._routes.find(route => route.path === path && route.requestType === requestType);
     }
 }
+
+@Service()
+class Foo {
+    doFooStuff(){
+        console.log('foo')
+    }
+}
+
+@Service()
+class Bar {
+    constructor(public foo: Foo)
+
+    doBarStuff(){
+        console.log('bar')
+    }
+}
+
+@Service()
+class FooBar {
+    constructor(public foo: Foo, public bar:Bar){}
+}
+
+const foobar = Injector.resolve<FooBar>(FooBar);
+foobar.bar.doBarStuff();
+foobar.foo.doFooStuff();
+foobar.bar.foo.doFooStuff();
