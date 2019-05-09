@@ -17,4 +17,38 @@ A [deno](http://deno.land) HTTP/REST server
 
 ## Disired Usage:
 
-To be defined...
+`main.ts`:
+
+```javascript
+import { server } from 'fari'
+
+(() => {
+    server.listen('0.0.0.0:8080');
+})()
+```
+
+`demo.ts`:
+
+```javascript
+
+@Route
+class Demo {
+
+    @GET({url: '/demo/:id'})
+    function getDemo(@urlParameter id: number){
+    }
+    
+    @PUT({url: '/demo'})
+    function createDemo(@body Demo: Type<DemoModel>){
+    }
+    
+    @POST({url: '/demo?ex={ex}'})
+    function updateDemo(@urlParameter ex: string, @body Demo: Type<DemoModel>){
+    }
+    
+    @DELETE({url: '/demo'})
+    function deleteDemo(){
+    }
+}
+
+```
