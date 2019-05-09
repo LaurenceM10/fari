@@ -34,7 +34,7 @@ import { server } from 'fari'
 @Route
 class Demo {
 
-    @GET({url: '/demo/:id'})
+    @GET({url: '/demo/{id}'})
     function getDemo(@urlParameter id: number){
     }
     
