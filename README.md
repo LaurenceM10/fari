@@ -36,20 +36,20 @@ import { server } from 'fari'
 @Route
 class Demo {
 
-    @GET({url: '/demo/{id}'})
-    function getDemo(@urlParameter id: number){
+    @Route({method:'GET', url: '/demo/{id}'})
+    function getDemo(@Route({ urlParams: ['id'] }) args: []){
     }
-    
-    @PUT({url: '/demo'})
-    function createDemo(@body Demo: Type<DemoModel>){
+
+    @Route({{method:'PUT', url: '/demo'})
+    function createDemo(@Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
-    
-    @POST({url: '/demo?ex={ex}'})
-    function updateDemo(@urlParameter ex: string, @body Demo: Type<DemoModel>){
+
+    @Route({{method:'POST', url: '/demo?ex={ex}'})
+    function updateDemo(@Route({ queryParams: ['ex']}) args: [], @Route({ bodyOfType: 'DemoModel' }) Demo: DemoModel){
     }
-    
-    @DELETE({url: '/demo'})
-    function deleteDemo(){
+
+    @Route({{method:'DELETE', url: '/demo/{id}'})
+    function deleteDemo(@Route({ urlParams: ['id'] }) args: []){
     }
 }
 
