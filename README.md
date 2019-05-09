@@ -17,6 +17,8 @@ A [deno](http://deno.land) HTTP/REST server
 
 ## Disired Usage:
 
+See [http://blog.wolksoftware.com/decorators-reflection-javascript-typescript](http://blog.wolksoftware.com/decorators-reflection-javascript-typescript)
+
 `main.ts`:
 
 ```javascript
