@@ -2,17 +2,20 @@
 
 A [deno](http://deno.land) HTTP/REST server
 
-## TO DO:
+## TO DO (Sorted by prio):
 
-
--   [ ] Detailed Feature list http/1.1 http/2
--   [ ] Prioritacing Features
--   [ ] handling TCP requests
+-   [X] Minimal http features
 -   [ ] handling Routes
--   [ ] handling Input types
-    -   [ ] handling 400, 404 etc.
--   [ ] leveraging multithread
--   [ ] HTTP/2
+-   Minimal Feature list http/1.1
+    - [ ] RFC 7230: Message syntax and routing
+    - [ ] RFC 7231: Semantics and Content
+    - [ ] RFC 7232: Conditional Requests
+    - [ ] RFC 7233: Range Requests
+    - [ ] RFC 7234: Caching
+    - [ ] RFC 7235: Authentication
+-   [ ] Minimal Feature list http/2
+-   Non Minimal Features http/1.1
+-   Non Minimal Features http/2
 -   [ ] tests, tests, tests
 
 ## Disired Usage:
