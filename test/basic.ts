@@ -1,23 +1,23 @@
-import Fari, { HttpRoute, UrlParameter, QueryParameter, Body } from "../mod.ts";
+import Fari, { FariRoute } from "../mod.ts";
 
-@HttpRoute({ modelName: "TestModel" })
+@FariRoute.model({ modelName: "TestModel" })
 class TestModel {
     test: string;
 }
 
-@HttpRoute
+@FariRoute.controller
 class TestAPI {
-    @HttpRoute({ method: "GET", url: "/test/{0}" })
-    async getTest(@UrlParameter id: string) {}
+    @FariRoute.get({ url: "/test/{0}" })
+    async getTest(@FariRoute.urlParameter id: string) {}
 
-    @HttpRoute({ method: "PUT", url: "/demo" })
-    async createTest(@Body Demo: TestModel) {}
+    @FariRoute.put({ url: "/demo" })
+    async createTest(@FariRoute.body Demo: TestModel) {}
 
-    @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
-    async updateTest(@QueryParameter ex: string, @Body Demo: TestModel) {}
+    @FariRoute.post({ url: "/demo?ex={ex}" })
+    async updateTest(@FariRoute.queryParameter ex: string, @FariRoute.body Demo: TestModel) {}
 
-    @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
-    async deleteTest(@UrlParameter args: string) {}
+    @FariRoute.delte({ url: "/demo/{id}" })
+    async deleteTest(@FariRoute.urlParameter args: string) {}
 }
 
 (() => {

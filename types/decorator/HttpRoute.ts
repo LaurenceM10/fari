@@ -1,7 +1,7 @@
 import { Server } from "../Server.ts";
 
 //http://blog.wolksoftware.com/decorators-metadata-reflection-in-typescript-from-novice-to-expert-part-3
-export default function HttpRoute(...args: any[]) {
+function HttpRouteOld(...args: any[]) {
     switch (args.length) {
         case 1:
             console.log("class");
@@ -19,22 +19,24 @@ export default function HttpRoute(...args: any[]) {
     }
 }
 
-export function UrlParameter(...args: any[]) {
-    console.log(args);
+class FariRoute {
+    static model(...args: any[]): void {}
+
+    static controller(...args: any[]): void {}
+
+    static get(...args: any[]): void {}
+
+    static post(...args: any[]): void {}
+
+    static put(...args: any[]): void {}
+
+    static delete(...args: any[]): void {}
+
+    static urlParameter(...args: any[]): void {}
+
+    static queryParameter(...args: any[]): void {}
+
+    static body(...args: any[]): void {}
 }
 
-export function QueryParameter(...args: any[]) {
-    console.log(args);
-}
-
-export function Body(...args: any[]) {
-    console.log(args);
-}
-
-function httpRouteClass(...args: any[]) {
-    console.log(args);
-}
-
-function httpRouteMethod(...args: any[]) {
-    console.log(args);
-}
+export default FariRoute;
