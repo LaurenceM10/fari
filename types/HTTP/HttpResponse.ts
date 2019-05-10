@@ -1,49 +1,50 @@
-namespace Fari {
-    class HttpResponse {
-        private _protocol: Fari.HttpProtocol;
-        private _status: Fari.HttpCode;
-        private _contentLength: string;
-        private _content: string;
+import HttpCode from "./HttpCode.ts";
+import HttpProtocol from "./HttpProtocol.ts";
 
-        get protocol(): Fari.HttpProtocol {
-            return this._protocol;
-        }
+export default class HttpResponse {
+    private _protocol: HttpProtocol;
+    private _status: HttpCode;
+    private _contentLength: string;
+    private _content: string;
 
-        set protocol(protocol: Fari.HttpProtocol) {
-            this._protocol = protocol;
-        }
+    get protocol(): HttpProtocol {
+        return this._protocol;
+    }
 
-        get status(): Fari.HttpCode {
-            return this._status;
-        }
+    set protocol(protocol: HttpProtocol) {
+        this._protocol = protocol;
+    }
 
-        set status(status: Fari.HttpCode) {
-            this._status = status;
-        }
+    get status(): HttpCode {
+        return this._status;
+    }
 
-        get contentLength(): string {
-            return this._contentLength;
-        }
+    set status(status: HttpCode) {
+        this._status = status;
+    }
 
-        get content(): string {
-            return this._content;
-        }
+    get contentLength(): string {
+        return this._contentLength;
+    }
 
-        set content(content: string) {
-            this._contentLength = content.length.toString();
-            this._content = content;
-        }
+    get content(): string {
+        return this._content;
+    }
 
-        constructor() {}
+    set content(content: string) {
+        this._contentLength = content.length.toString();
+        this._content = content;
+    }
 
-        toResponseString() {
-            return `${this._protocol} ${this._status.split("/")[0]} ${this._status.split("/")[1]}   \r\nContent-Length: ${this._contentLength}\r\n\r\n${
-                this._content
-            }\n`;
-        }
+    constructor() {}
 
-        toUint8Array() {
-            return new TextEncoder().encode(this.toResponseString());
-        }
+    toResponseString() {
+        return `${this._protocol} ${this._status.split("/")[0]} ${this._status.split("/")[1]}   \r\nContent-Length: ${this._contentLength}\r\n\r\n${
+            this._content
+        }\n`;
+    }
+
+    toUint8Array() {
+        return new TextEncoder().encode(this.toResponseString());
     }
 }

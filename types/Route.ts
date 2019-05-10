@@ -1,25 +1,25 @@
-namespace Fari {
-    class Route {
-        private _path: string;
-        private _reqType: Fari.HttpType;
-        private _func: object;
+import HttpType from "./HTTP/HttpType.ts";
 
-        get path(): string {
-            return this._path;
-        }
+export default class Route {
+    private _path: string;
+    private _reqType: HttpType;
+    private _func: object;
 
-        get requestType(): Fari.HttpType {
-            return this._reqType;
-        }
+    get path(): string {
+        return this._path;
+    }
 
-        get func(): object {
-            return this._func;
-        }
+    get requestType(): HttpType {
+        return this._reqType;
+    }
 
-        constructor(path: string, requestType: Fari.HttpType, func: object) {
-            this._path = path;
-            this._reqType = requestType;
-            this._func = func;
-        }
+    get func(): object {
+        return this._func;
+    }
+
+    constructor(path: string, requestType: HttpType, func: object) {
+        this._path = path;
+        this._reqType = requestType;
+        this._func = func;
     }
 }

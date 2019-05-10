@@ -1,77 +1,68 @@
-import Route from "./Route.ts";
-import HttpRequest from "./HttpRequest.ts";
-import HttpResponse from "./HttpResponse.ts";
-import { RequestType, StatusCode } from "../enums/mod.ts";
-import {Service} from "../ServiceDecorator";
-import {Injector} from '../Injector';
+import Listener from "./common/Listener.ts";
+import HttpRequest from "./HTTP/HttpRequest.ts";
+import HttpResponse from "./HTTP/HttpResponse.ts";
 
-const { listen } = Deno;
+export class Server {
+    private _listeners: Array<Listener>;
+    private static _instance: Server;
 
-namespace Fari {
-    export class Server {
-        private _addr: string;
-        private _routes: Array<Route>;
+    private constructor() {
+        this._listeners = [];
+    }
 
-        constructor(addr: string) {
-            this._addr = addr;
+    private async _runFunc(data: string, func: object): Promise<void> {}
+
+    public static instance(): Server {
+        if (!this._instance) {
+            this._instance = new Server();
         }
+        return this._instance;
+    }
 
-        private async _runFunc(data: string, func: object): Promise<void> {}
+    async handleRequest(request: HttpRequest, response: HttpResponse): Promise<void> {
+        console.log(HttpRequest);
+        // response.protocol = req.protocol;
+        // const route = this.findRoute(req.route, req.type);
+        // if (!route) {
+        //     response.status = StatusCode.NotFound;
+        //     await conn.write(response.toUint8Array());
+        //     break;
+        // }
 
-        private async _handle(conn: Deno.Conn): Promise<void> {
-            const buffer = new Uint8Array(1024);
-            const response = new HttpResponse();
-            try {
-                while (true) {
-                    const r = await conn.read(buffer);
-                    const req = new HttpRequest(buffer);
-                    response.protocol = req.protocol;
-                    const route = this.findRoute(req.route, req.type);
+        // Route not found
 
-                    if (!route) {
-                        response.status = StatusCode.NotFound;
-                        await conn.write(response.toUint8Array());
-                        break;
-                    }
+        // if input type missmatch
 
-                    // if input type missmatch
+        // run route
 
-                    // run route
+        // send response
 
-                    // send response
+        // await conn.write(response);
+    }
 
-                    // await conn.write(response);
-                }
-            } catch (e) {
-                response.status = StatusCode.InternalServerError;
-                response.content = e.toString();
-                await conn.write(response.toUint8Array());
-            } finally {
-                conn.close();
+    listen(addr: string): void {
+        const listener = new Listener(addr);
+        this._listeners.push(listener);
+        listener.listen(this);
+    }
+
+    stopListen(addr: string): void {
+        let listenerIndex = -1;
+        const listener = this._listeners.find((lis, index) => {
+            if (lis.addr === addr) {
+                listenerIndex = index;
+                return true;
             }
-        }
 
-        async run(): Promise<void> {
-            const listener = listen("tcp", this._addr);
-            while (true) {
-                const conn = await listener.accept();
-                this._handle(conn);
-            }
-        }
+            return false;
+        });
 
-        addRoute(route: Route): void {
-            if (this.findRoute(route.path, route.requestType)) throw `Route: '${route.path}' already    added`;
-            this._routes.push(route);
-        }
+        if (listenerIndex < 0) return;
 
-        addRoutes(routes: Array<Route>): void {
-            routes.forEach(route => {
-                this.addRoute(route);
-            });
-        }
-
-        findRoute(path: string, requestType: RequestType): Route {
-            return this._routes.find(route => route.path === path && route.requestType ===  requestType);
-        }
+        listener.stopListen();
+        this._listeners.splice(listenerIndex, 1);
     }
 }
+
+const Fari = { server: Server.instance() };
+export default Fari;

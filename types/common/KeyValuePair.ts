@@ -1,23 +1,21 @@
-namespace Fari {
-    class KeyValuePair<key = string, value = string> {
-        private _key: string;
-        private _value: string;
+export default class KeyValuePair<key = string, value = string> {
+    private _key: string;
+    private _value: string;
 
-        get key(): string {
-            return this._key;
-        }
+    get key(): string {
+        return this._key;
+    }
 
-        get value(): string {
-            return this._value;
-        }
+    get value(): string {
+        return this._value;
+    }
 
-        set value(value: string) {
-            this._value = value
-        }
+    set value(value: string) {
+        this._value = value;
+    }
 
-        constructor(key: string, value: string) {
-            this._key = key;
-            this._value = value;
-        }
+    constructor(key: string, value: string) {
+        this._key = key;
+        this._value = value;
     }
 }
