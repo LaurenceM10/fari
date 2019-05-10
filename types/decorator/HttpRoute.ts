@@ -3,8 +3,7 @@ export default function HttpRoute(...args: any[]) {
     console.log(args);
     switch (args.length) {
         case 1:
-            throw new Error("Decorators are not valid here!");
-        //return httpRouteClass.apply(this, args);
+            return httpRouteClass.apply(this, args);
         case 2:
         // return logProperty.apply(this, args);
         case 3:

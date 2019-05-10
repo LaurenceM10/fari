@@ -1,13 +1,16 @@
 import Listener from "./common/Listener.ts";
+import Model from "./common/Model.ts";
 import HttpRequest from "./HTTP/HttpRequest.ts";
 import HttpResponse from "./HTTP/HttpResponse.ts";
 
 export class Server {
-    private _listeners: Array<Listener>;
     private static _instance: Server;
+    private _listeners: Array<Listener>;
+    private _models: Array<Model>;
 
     private constructor() {
         this._listeners = [];
+        this._models = [];
     }
 
     private async _runFunc(data: string, func: object): Promise<void> {}
@@ -38,6 +41,10 @@ export class Server {
         // send response
 
         // await conn.write(response);
+    }
+
+    addModel(model: Model): void {
+        this._models.push(model);
     }
 
     listen(addr: string): void {

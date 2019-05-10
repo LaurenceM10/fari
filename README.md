@@ -36,23 +36,24 @@ import Fari from "fari";
 `demo.ts`:
 
 ```javascript
+import { HttpRoute } from "Fari";
 
 class Demo {
 
     @HttpRoute({method:'GET', url: '/demo/{id}'})
-    function getDemo(@HttpRoute({ urlParams: ['id'] }) args: []): HttpResponse {
+    function getDemo(@HttpRoute({ urlParams: ['id'] }) args: []) {
     }
 
     @HttpRoute({method:'PUT', url: '/demo'})
-    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel): HttpResponse {
+    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel) {
     }
 
     @HttpRoute({method:'POST', url: '/demo?ex={ex}'})
-    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel): HttpResponse {
+    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel): {
     }
 
     @HttpRoute({method:'DELETE', url: '/demo/{id}'})
-    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []): HttpResponse {
+    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []) {
     }
 }
 
@@ -61,6 +62,7 @@ class Demo {
 `DemoModel.js`
 
 ```javascript
+@HttpRoute({modelName: 'DemoModel'})
 class DemoModel {
     private _id: number;
     private _name: string;
