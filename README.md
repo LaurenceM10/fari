@@ -39,24 +39,18 @@ import Fari from "fari";
 import { HttpRoute } from "Fari";
 
 class Demo {
+    @HttpRoute({ method: "GET", url: "/demo/{id}" })
+    async getDemo(@HttpRoute({ urlParams: ["id"] }) args: []): DemoModel {}
 
-    @HttpRoute({method:'GET', url: '/demo/{id}'})
-    function getDemo(@HttpRoute({ urlParams: ['id'] }) args: []) {
-    }
+    @HttpRoute({ method: "PUT", url: "/demo" })
+    async createDemo(@HttpRoute({ bodyOfType: "DemoModel" }) Demo: DemoModel): Promise<void> {}
 
-    @HttpRoute({method:'PUT', url: '/demo'})
-    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel) {
-    }
+    @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
+    async updateDemo(@HttpRoute({ queryParams: ["ex"] }) args: [], @HttpRoute({ bodyOfType: "DemoModel" }) Demo: DemoModel): Promise<void> {}
 
-    @HttpRoute({method:'POST', url: '/demo?ex={ex}'})
-    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel): {
-    }
-
-    @HttpRoute({method:'DELETE', url: '/demo/{id}'})
-    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []) {
-    }
+    @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
+    async deleteDemo(@HttpRoute({ urlParams: ["id"] }) args: []): Promise<void> {}
 }
-
 ```
 
 `DemoModel.js`

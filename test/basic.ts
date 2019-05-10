@@ -10,19 +10,15 @@ class TestModel {
 }
 
 class TestAPI {
-    @HttpRoute({method:'GET', url: '/test/{id}'})
-    function getTest(@HttpRoute({ urlParams: ['id'] }) args: []) {
-    }
+    @HttpRoute({ method: "GET", url: "/test/{id}" })
+    getTest(@HttpRoute({ urlParams: ["id"] }) args: []) {}
 
-    @HttpRoute({method:'PUT', url: '/demo'})
-    function createDemo(@HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel) {
-    }
+    @HttpRoute({ method: "PUT", url: "/demo" })
+    createDemo(@HttpRoute({ bodyOfType: "TestModel" }) Demo: TestModel) {}
 
-    @HttpRoute({method:'POST', url: '/demo?ex={ex}'})
-    function updateDemo(@HttpRoute({ queryParams: ['ex']}) args: [], @HttpRoute({ bodyOfType: 'DemoModel' }) Demo: DemoModel) {
-    }
+    @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
+    updateDemo(@HttpRoute({ queryParams: ["ex"] }) args: [], @HttpRoute({ bodyOfType: "DemoModel" }) Demo: TestModel) {}
 
-    @HttpRoute({method:'DELETE', url: '/demo/{id}'})
-    function deleteDemo(@HttpRoute({ urlParams: ['id'] }) args: []): HttpResponse {
-    }
+    @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
+    deleteDemo(@HttpRoute({ urlParams: ["id"] }) args: []) {}
 }
