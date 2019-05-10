@@ -5,21 +5,33 @@ export default function HttpRoute(...args: any[]) {
         case 1:
             return httpRouteClass.apply(this, args);
         case 2:
-        // return logProperty.apply(this, args);
+            throw new Error("Not valid with Parameters!");
         case 3:
             if (typeof args[2] === "number") {
-                return httpParameterClass.apply(this, args);
+                throw new Error("Not valid with Properties!");
             }
-            return httpMethodClass.apply(this, args);
+            return httpRouteMethod.apply(this, args);
         default:
-            throw new Error("Decorators are not valid here!");
+            throw new Error("Not valid Decorator!");
     }
 }
 
-function httpRouteClass() {}
+export function UrlParameter(...args: any[]) {
+    console.log(args);
+}
 
-function httpPropertyClass() {}
+export function QueryParameter(...args: any[]) {
+    console.log(args);
+}
 
-function httpParameterClass() {}
+export function Body(...args: any[]) {
+    console.log(args);
+}
 
-function httpMethodClass() {}
+function httpRouteClass(...args: any[]) {
+    console.log(args);
+}
+
+function httpRouteMethod(...args: any[]) {
+    console.log(args);
+}

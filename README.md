@@ -39,17 +39,17 @@ import Fari from "fari";
 import { HttpRoute } from "Fari";
 
 class Demo {
-    @HttpRoute({ method: "GET", url: "/demo/{id}" })
-    async getDemo(@HttpRoute({ urlParams: ["id"] }) args: []): DemoModel {}
+    @HttpRoute({ method: "GET", url: "/demo/{0}" })
+    getDemo(@UrlParameter id: string) {}
 
     @HttpRoute({ method: "PUT", url: "/demo" })
-    async createDemo(@HttpRoute({ bodyOfType: "DemoModel" }) Demo: DemoModel): Promise<void> {}
+    createDemo(@Body Demo: DemoModel) {}
 
     @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
-    async updateDemo(@HttpRoute({ queryParams: ["ex"] }) args: [], @HttpRoute({ bodyOfType: "DemoModel" }) Demo: DemoModel): Promise<void> {}
+    updateDemo(@QueryParameter ex: string, @Body Demo: DemoModel) {}
 
     @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
-    async deleteDemo(@HttpRoute({ urlParams: ["id"] }) args: []): Promise<void> {}
+    deleteDemo(@UrlParameter args: string) {}
 }
 ```
 

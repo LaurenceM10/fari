@@ -1,4 +1,4 @@
-import Fari, { HttpRoute } from "../mod.ts";
+import Fari, { HttpRoute, UrlParameter, QueryParameter, Body } from "../mod.ts";
 
 (() => {
     Fari.server.listen("0.0.0.0:8080");
@@ -10,15 +10,15 @@ class TestModel {
 }
 
 class TestAPI {
-    @HttpRoute({ method: "GET", url: "/test/{id}" })
-    getTest(@HttpRoute({ urlParams: ["id"] }) args: []) {}
+    @HttpRoute({ method: "GET", url: "/test/{0}" })
+    getTest(@UrlParameter id: string) {}
 
     @HttpRoute({ method: "PUT", url: "/demo" })
-    createDemo(@HttpRoute({ bodyOfType: "TestModel" }) Demo: TestModel) {}
+    createTest(@Body Demo: TestModel) {}
 
     @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
-    updateDemo(@HttpRoute({ queryParams: ["ex"] }) args: [], @HttpRoute({ bodyOfType: "DemoModel" }) Demo: TestModel) {}
+    updateTest(@QueryParameter ex: string, @Body Demo: TestModel) {}
 
     @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
-    deleteDemo(@HttpRoute({ urlParams: ["id"] }) args: []) {}
+    deleteTest(@UrlParameter args: string) {}
 }
