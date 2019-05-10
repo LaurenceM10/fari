@@ -1,11 +1,11 @@
 export default class Model {
-    private _modalName: string;
+    private _modelName: string;
 
-    get modalName(): string {
-        return this._modalName;
+    get modelName(): string {
+        return this._modelName;
     }
 
     constructor(name: string) {
-        this._modalName = name;
+        this._modelName = name;
     }
 }

@@ -1,12 +1,12 @@
 import Listener from "./common/Listener.ts";
-import Model from "./common/Model.ts";
 import HttpRequest from "./HTTP/HttpRequest.ts";
 import HttpResponse from "./HTTP/HttpResponse.ts";
 
 export class Server {
     private static _instance: Server;
     private _listeners: Array<Listener>;
-    private _models: Array<Model>;
+    private _models: Array<Object>;
+    private _methods: Array<Object>;
 
     private constructor() {
         this._listeners = [];
@@ -43,8 +43,12 @@ export class Server {
         // await conn.write(response);
     }
 
-    addModel(model: Model): void {
+    addModel(model: Object): void {
         this._models.push(model);
+    }
+
+    addMethods(method: Object): void {
+        this._methods.push(method);
     }
 
     listen(addr: string): void {

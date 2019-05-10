@@ -1,8 +1,10 @@
+import { Server } from "../Server.ts";
+
 //http://blog.wolksoftware.com/decorators-metadata-reflection-in-typescript-from-novice-to-expert-part-3
 export default function HttpRoute(...args: any[]) {
-    console.log(args);
     switch (args.length) {
         case 1:
+            console.log("class");
             return httpRouteClass.apply(this, args);
         case 2:
             throw new Error("Not valid with Parameters!");
@@ -10,6 +12,7 @@ export default function HttpRoute(...args: any[]) {
             if (typeof args[2] === "number") {
                 throw new Error("Not valid with Properties!");
             }
+            console.log("Method");
             return httpRouteMethod.apply(this, args);
         default:
             throw new Error("Not valid Decorator!");
