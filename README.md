@@ -34,6 +34,7 @@ import Fari from "fari";
 })();
 ```
 
+Using TypeScript Decorators (Experimental)
 `demo.ts`:
 
 ```javascript
@@ -52,6 +53,32 @@ class Demo {
     @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
     deleteDemo(@UrlParameter args: string) {}
 }
+```
+
+Using pure JavaScript
+`demo.ts`:
+
+```javascript
+import Fari from "Fari";
+
+(() => {
+    Fari.server.get('/', function (req, res) {
+        res.send('Hello World!')
+    })
+
+    Fari.server.post('/', function (req, res) {
+        res.send('Got a POST request')
+    })
+
+    Fari.server.put('/user', function (req, res) {
+        res.send('Got a PUT request at /user')
+    })
+
+    Fari.server.delete('/user', function (req, res) {
+        res.send('Got a DELETE request at /user')
+    })
+
+})()
 ```
 
 `DemoModel.js`
