@@ -17,6 +17,7 @@ A [deno](http://deno.land) HTTP/REST server
 -   Non Minimal Features http/1.1
 -   Non Minimal Features http/2
 -   [ ] tests, tests, tests
+    - [ ] Load tests
 
 ## Disired Usage:
 
