@@ -1,42 +1,49 @@
 import { Server } from "../Server.ts";
 
-//http://blog.wolksoftware.com/decorators-metadata-reflection-in-typescript-from-novice-to-expert-part-3
-function HttpRouteOld(...args: any[]) {
-    switch (args.length) {
-        case 1:
-            console.log("class");
-            return httpRouteClass.apply(this, args);
-        case 2:
-            throw new Error("Not valid with Parameters!");
-        case 3:
-            if (typeof args[2] === "number") {
-                throw new Error("Not valid with Properties!");
-            }
-            console.log("Method");
-            return httpRouteMethod.apply(this, args);
-        default:
-            throw new Error("Not valid Decorator!");
-    }
-}
-
 class FariRoute {
-    static model(...args: any[]): void {}
+    static model(constructor: Function): void {
+        console.log(constructor)
+    }
 
-    static controller(...args: any[]): void {}
+    static controller(constructor: Function): void {
+        console.log(constructor)
+    }
 
-    static get(...args: any[]): void {}
+    static get(url: string): Function {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            console.log(url, target, propertyKey, descriptor)
+        }
+    }
 
-    static post(...args: any[]): void {}
+    static post(url: string): Function {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            console.log(url, target, propertyKey, descriptor)
+        }
+    }
 
-    static put(...args: any[]): void {}
+    static put(url: string): Function {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            console.log(url, target, propertyKey, descriptor)
+        }
+    }
 
-    static delete(...args: any[]): void {}
+    static delete(url: string): Function {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            console.log(url, target, propertyKey, descriptor)
+        }
+    }
 
-    static urlParameter(...args: any[]): void {}
+    static urlParameter(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
+        console.log(target, propertyKey, parameterIndex)
+    }
 
-    static queryParameter(...args: any[]): void {}
+    static queryParameter(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
+        console.log(target, propertyKey, parameterIndex)
+    }
 
-    static body(...args: any[]): void {}
+    static body(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
+        console.log(target, propertyKey, parameterIndex)
+    }
 }
 
 export default FariRoute;

@@ -1,22 +1,22 @@
 import Fari, { FariRoute } from "../mod.ts";
 
-@FariRoute.model({ modelName: "TestModel" })
+@FariRoute.model
 class TestModel {
     test: string;
 }
 
 @FariRoute.controller
 class TestAPI {
-    @FariRoute.get({ url: "/test/{0}" })
+    @FariRoute.get("/test/{0}")
     async getTest(@FariRoute.urlParameter id: string) {}
 
-    @FariRoute.put({ url: "/demo" })
+    @FariRoute.put("/demo")
     async createTest(@FariRoute.body Demo: TestModel) {}
 
-    @FariRoute.post({ url: "/demo?ex={ex}" })
+    @FariRoute.post("/demo?ex={ex}")
     async updateTest(@FariRoute.queryParameter ex: string, @FariRoute.body Demo: TestModel) {}
 
-    @FariRoute.delte({ url: "/demo/{id}" })
+    @FariRoute.delete("/demo/{id}")
     async deleteTest(@FariRoute.urlParameter args: string) {}
 }
 

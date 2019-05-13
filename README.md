@@ -21,6 +21,8 @@ A [deno](http://deno.land) HTTP/REST server
 
 ## Disired Usage:
 
+deno run --allow-net ./test/basic.ts --config
+
 See [http://blog.wolksoftware.com/decorators-reflection-javascript-typescript](http://blog.wolksoftware.com/decorators-reflection-javascript-typescript)
 
 `main.ts`:
@@ -40,23 +42,39 @@ Using TypeScript Decorators (Experimental)
 ```javascript
 import { HttpRoute } from "Fari";
 
-class Demo {
-    @HttpRoute({ method: "GET", url: "/demo/{0}" })
-    getDemo(@UrlParameter id: string) {}
+@FariRoute.controller // use case?
+class TestAPI {
+    @FariRoute.get("/test/{id}")
+    async getTest(@FariRoute.urlParameter id: string) {}
 
-    @HttpRoute({ method: "PUT", url: "/demo" })
-    createDemo(@Body Demo: DemoModel) {}
+    @FariRoute.put("/demo")
+    async createTest(@FariRoute.body Demo: TestModel) {}
 
-    @HttpRoute({ method: "POST", url: "/demo?ex={ex}" })
-    updateDemo(@QueryParameter ex: string, @Body Demo: DemoModel) {}
+    @FariRoute.post("/demo?ex={ex}")
+    async updateTest(@FariRoute.queryParameter ex: string, @FariRoute.body Demo: TestModel) {}
 
-    @HttpRoute({ method: "DELETE", url: "/demo/{id}" })
-    deleteDemo(@UrlParameter args: string) {}
+    @FariRoute.delete("/demo/{id}")
+    async deleteTest(@FariRoute.urlParameter id: string) {}
 }
+
+@FariRoute.model  // use case?
+class DemoModel {
+    private _id: number;
+    private _name: string;
+
+    get id(): number { return this._id }
+    get name(): number { return this._name }
+
+    constructor (id: number, name: string){
+        this._id = id;
+        this._name = name;
+    }
+}
+
 ```
 
 Using pure JavaScript
-`demo.ts`:
+`demo.js`:
 
 ```javascript
 import Fari from "Fari";
@@ -79,22 +97,4 @@ import Fari from "Fari";
     })
 
 })()
-```
-
-`DemoModel.js`
-
-```javascript
-@HttpRoute({modelName: 'DemoModel'})
-class DemoModel {
-    private _id: number;
-    private _name: string;
-
-    get id(): number { return this._id }
-    get name(): number { return this._name }
-
-    constructor (id: number, name: string){
-        this._id = id;
-        this._name = name;
-    }
-}
 ```
