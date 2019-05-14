@@ -1,23 +1,54 @@
 import Fari, { FariRoute } from "../mod.ts";
+import HttpRequest from "../types/HTTP/HttpRequest.ts";
+import HttpResponse from "../types/HTTP/HttpResponse.ts";
 
-@FariRoute.model
+// deno run --config ./tsconfig.json --allow-net ./test/basic.ts
+
 class TestModel {
     test: string;
 }
 
-@FariRoute.controller
 class TestAPI {
-    @FariRoute.get("/test/{0}")
-    async getTest(@FariRoute.urlParameter id: string) {}
+    @FariRoute.get({
+        url: "/test/{0}",
+        urlParameter: [
+            {
+                name: "id",
+                index: 0,
+                mandatory: true,
+                type: "string"
+            }
+        ]
+    })
+    async getTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.put("/demo")
-    async createTest(@FariRoute.body Demo: TestModel) {}
+    @FariRoute.put({
+        url: "/test",
+        body: {
+            type: "TestModel"
+        }
+    })
+    async createTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.post("/demo?ex={ex}")
-    async updateTest(@FariRoute.queryParameter ex: string, @FariRoute.body Demo: TestModel) {}
+    @FariRoute.post({
+        url: "/test?ex={0}",
+        queryParameter: [
+            {
+                name: "ex",
+                mandatory: false,
+                type: "string"
+            }
+        ],
+        body: {
+            type: "TestModel"
+        }
+    })
+    async updateTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.delete("/demo/{id}")
-    async deleteTest(@FariRoute.urlParameter args: string) {}
+    @FariRoute.delete({
+        url: "/test/{0}"
+    })
+    async deleteTest(req: HttpRequest, res: HttpResponse) {}
 }
 
 (() => {

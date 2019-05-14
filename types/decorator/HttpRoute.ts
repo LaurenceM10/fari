@@ -1,48 +1,46 @@
 import { Server } from "../Server.ts";
 
+const server = Server.instance();
+
 class FariRoute {
-    static model(constructor: Function): void {
-        console.log(constructor)
-    }
+    private static model(constructor: Function): void {}
 
-    static controller(constructor: Function): void {
-        console.log(constructor)
-    }
+    private static controller(constructor: Function): void {}
 
-    static get(url: string): Function {
+    static get(parameters: any): Function {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-            console.log(url, target, propertyKey, descriptor)
-        }
+            if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
+
+            const { urlParameter, queryParameter, body } = parameters;
+            server.get(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+        };
     }
 
-    static post(url: string): Function {
+    static post(parameters: any): Function {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-            console.log(url, target, propertyKey, descriptor)
-        }
+            if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
+
+            const { urlParameter, queryParameter, body } = parameters;
+            server.post(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+        };
     }
 
-    static put(url: string): Function {
+    static put(parameters: any): Function {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-            console.log(url, target, propertyKey, descriptor)
-        }
+            if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
+
+            const { urlParameter, queryParameter, body } = parameters;
+            server.put(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+        };
     }
 
-    static delete(url: string): Function {
+    static delete(parameters: any): Function {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-            console.log(url, target, propertyKey, descriptor)
-        }
-    }
+            if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
 
-    static urlParameter(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
-        console.log(target, propertyKey, parameterIndex)
-    }
-
-    static queryParameter(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
-        console.log(target, propertyKey, parameterIndex)
-    }
-
-    static body(target: Object, propertyKey: string | symbol, parameterIndex: number): void {
-        console.log(target, propertyKey, parameterIndex)
+            const { urlParameter, queryParameter, body } = parameters;
+            server.delete(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+        };
     }
 }
 
