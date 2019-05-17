@@ -24,7 +24,6 @@ export default class Listener {
                 const r = await conn.read(buffer);
                 const request = new HttpRequest(buffer);
                 await this._server.handleRequest(request, response);
-                console.log(response.toResponseString());
                 await conn.write(response.toUint8Array());
             }
         } catch (e) {

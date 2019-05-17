@@ -1,6 +1,7 @@
 import Fari, { FariRoute } from "../mod.ts";
 import HttpRequest from "./HTTP/HttpRequest.ts";
 import HttpResponse from "./HTTP/HttpResponse.ts";
+import HttpCode from "./HTTP/HttpCode.ts";
 
 const writeError = message => {
     console.error(message);
@@ -8,22 +9,33 @@ const writeError = message => {
 
 // start/stop listen
 let testName = "start/stop listen";
-(() => {
+(async () => {
     const listenOn = "0.0.0.0:8080";
-    Fari.server.listen(listenOn);
 
     Fari.server.get("/", (req, res) => {
-        res.content = "Test OK";
+        try {
+            res.status = HttpCode.OK;
+            res.content = JSON.stringify({ test: "test" });
+        } catch (err) {
+            res.status = HttpCode.InternalServerError;
+            res.content = "Something went wrong!";
+        }
     });
 
-    let res = fetch(`http://localhost:8080`).then(res => {
-        console.log(res.json());
-        if (res.status != 200) writeError(`Test ${testName} Failed`);
-    });
-    // if (res.body != "Test OK") writeError(`Test ${testName} Failed`);
+    Fari.server.listen(listenOn);
 
-    // res = await fetch(`http://localhost:8080/needs404`);
-    // if (res.status == 200) writeError(`Test ${testName} Failed`);
+    let res = await fetch(`http://localhost:8080`);
+    if (res.status != 200) writeError(`Test ${testName} Failed`);
+
+    let resJson = await res.json();
+    if (JSON.stringify(resJson) !== JSON.stringify({ test: "test" })) writeError(`Test ${testName} Failed`);
+
+    Fari.server.stopListen(listenOn);
+
+    try {
+        res = await fetch(`http://localhost:8080`);
+        writeError(`Test ${testName} Failed`);
+    } catch (err) {}
 })();
 
 // // deno run --config ./tsconfig.json --allow-net ./test/basic.ts

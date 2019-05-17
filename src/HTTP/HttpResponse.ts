@@ -35,7 +35,7 @@ export default class HttpResponse {
     constructor() {
         this._keyValuePairs = [];
         this._keyValuePairs.push({ key: "Content-Length", value: "0" });
-        this._keyValuePairs.push({ key: "Content-Type", value: "application/json" });
+        this._keyValuePairs.push({ key: "Content-Type", value: "text" });
     }
 
     addHeader(key, value) {
@@ -53,7 +53,7 @@ export default class HttpResponse {
             responseString += `${pair.key}: ${pair.value}\r\n`;
         });
         responseString += `\r\n`;
-        responseString += `${JSON.stringify(this._content)}\n`;
+        responseString += `${this._content}\n`;
         return responseString;
     }
 

@@ -20,16 +20,18 @@ export default class HttpEndPoint {
 
     constructor(url: string, func: Function, type: HttpType, httpParameters?: Object) {
         this._url = url;
+        this._func = func;
+        this._httpType = type;
         this._httpParameters = httpParameters;
     }
 
-    run(args: any[]): void {
+    run(request, response, args: any[] = []): void {
         try {
             // this._validators.forEach(val => val(...args));
         } catch (e) {
             console.log(e);
         } finally {
-            this._func(...args);
+            this._func(request, response, ...args);
         }
     }
 }
