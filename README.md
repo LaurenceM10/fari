@@ -1,6 +1,6 @@
 # Fari.js
 
-A [deno](http://deno.land) HTTP/REST server, implemented in TypeScript.
+A [deno](http://deno.land) HTTP server, implemented in TypeScript.
 
 ## Status
 
