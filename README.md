@@ -49,7 +49,7 @@ import { HttpRoute } from "Fari";
 class Test {
     @FariRoute.get({
         url: "/test/{0}",
-        urlParameter: [
+        routeParameters: [
             {
                 name: "id",
                 index: 0,
@@ -70,7 +70,7 @@ class Test {
 
     @FariRoute.post({
         url: "/test?ex={0}",
-        queryParameter: [
+        queryParameters: [
             {
                 name: "ex",
                 mandatory: false,

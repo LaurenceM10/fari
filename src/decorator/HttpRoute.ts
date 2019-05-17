@@ -11,8 +11,8 @@ class FariRoute {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
 
-            const { urlParameter, queryParameter, body } = parameters;
-            server.get(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+            const { routeParameters, queryParameters, body } = parameters;
+            server.get(parameters.url, descriptor.value, { routeParameters, queryParameters, body });
         };
     }
 
@@ -20,8 +20,8 @@ class FariRoute {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
 
-            const { urlParameter, queryParameter, body } = parameters;
-            server.post(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+            const { routeParameters, queryParameters, body } = parameters;
+            server.post(parameters.url, descriptor.value, { routeParameters, queryParameters, body });
         };
     }
 
@@ -29,8 +29,8 @@ class FariRoute {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
 
-            const { urlParameter, queryParameter, body } = parameters;
-            server.put(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+            const { routeParameters, queryParameters, body } = parameters;
+            server.put(parameters.url, descriptor.value, { routeParameters, queryParameters, body });
         };
     }
 
@@ -38,8 +38,8 @@ class FariRoute {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             if (!parameters || !parameters.url) throw new Error(`Error: ${propertyKey} no parameters or url provided`);
 
-            const { urlParameter, queryParameter, body } = parameters;
-            server.delete(parameters.url, descriptor.value, { urlParameter, queryParameter, body });
+            const { routeParameters, queryParameters, body } = parameters;
+            server.delete(parameters.url, descriptor.value, { routeParameters, queryParameters, body });
         };
     }
 }

@@ -39,19 +39,19 @@ export class Server {
         }
     }
 
-    get(url: string, func: Function, httpParameters?: any): void {
+    get(url: string, func: Function, httpParameters?: RouteParameters): void {
         this._endPoints.push(new HttpEndPoint(url, func, HttpType.GET, httpParameters));
     }
 
-    post(url: string, func: Function, httpParameters?: any): void {
+    post(url: string, func: Function, httpParameters?: RouteParameters): void {
         this._endPoints.push(new HttpEndPoint(url, func, HttpType.POST, httpParameters));
     }
 
-    put(url: string, func: Function, httpParameters?: any): void {
+    put(url: string, func: Function, httpParameters?: RouteParameters): void {
         this._endPoints.push(new HttpEndPoint(url, func, HttpType.PUT, httpParameters));
     }
 
-    delete(url: string, func: Function, httpParameters?: any): void {
+    delete(url: string, func: Function, httpParameters?: RouteParameters): void {
         this._endPoints.push(new HttpEndPoint(url, func, HttpType.DELETE, httpParameters));
     }
 

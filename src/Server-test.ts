@@ -38,6 +38,50 @@ let testName = "start/stop listen";
     } catch (err) {}
 })();
 
+// routes
+testName = "route parameters";
+(async () => {
+    const listenOn = "0.0.0.0:8080";
+
+    Fari.server.get(
+        "/test/{0}",
+        (req, res) => {
+            try {
+                res.status = HttpCode.OK;
+                res.content = JSON.stringify({ test: "test" });
+            } catch (err) {
+                res.status = HttpCode.InternalServerError;
+                res.content = "Something went wrong!";
+            }
+        },
+        {
+            routeParameters: [
+                {
+                    name: "id",
+                    index: 0,
+                    mandatory: true,
+                    type: "string"
+                }
+            ]
+        }
+    );
+
+    Fari.server.listen(listenOn);
+
+    let res = await fetch(`http://localhost:8080`);
+    if (res.status != 200) writeError(`Test ${testName} Failed`);
+
+    let resJson = await res.json();
+    if (JSON.stringify(resJson) !== JSON.stringify({ test: "test" })) writeError(`Test ${testName} Failed`);
+
+    Fari.server.stopListen(listenOn);
+
+    try {
+        res = await fetch(`http://localhost:8080`);
+        writeError(`Test ${testName} Failed`);
+    } catch (err) {}
+})();
+
 // // deno run --config ./tsconfig.json --allow-net ./test/basic.ts
 
 // class TestModel {
