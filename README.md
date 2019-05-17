@@ -48,12 +48,10 @@ import { HttpRoute } from "Fari";
 
 class Test {
     @FariRoute.get({
-        url: "/test/{0}",
+        url: "/test/:id",
         routeParameters: [
             {
                 name: "id",
-                index: 0,
-                mandatory: true,
                 type: "string"
             }
         ]
@@ -69,7 +67,7 @@ class Test {
     async createTest(req: HttpRequest, res: HttpResponse) {}
 
     @FariRoute.post({
-        url: "/test?ex={0}",
+        url: "/test",
         queryParameters: [
             {
                 name: "ex",

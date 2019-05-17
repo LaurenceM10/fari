@@ -43,8 +43,16 @@ testName = "route parameters";
 (async () => {
     const listenOn = "0.0.0.0:8080";
 
+    const testPar = {
+        routeParameters: [
+            {
+                name: "id",
+                type: "string"
+            }
+        ]
+    };
     Fari.server.get(
-        "/test/{0}",
+        "/test/:id",
         (req, res) => {
             try {
                 res.status = HttpCode.OK;
@@ -54,16 +62,7 @@ testName = "route parameters";
                 res.content = "Something went wrong!";
             }
         },
-        {
-            routeParameters: [
-                {
-                    name: "id",
-                    index: 0,
-                    mandatory: true,
-                    type: "string"
-                }
-            ]
-        }
+        testPar
     );
 
     Fari.server.listen(listenOn);
