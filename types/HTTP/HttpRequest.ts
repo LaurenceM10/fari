@@ -5,13 +5,8 @@ export default class HttpRequest {
     private _type: HttpType;
     private _protocol: HttpProtocol;
     private _route: string;
-    private _host: string;
-    private _connection: string;
-    private _userAgent: string;
-    private _accept: string;
-    private _encoding: string;
-    private _language: string;
-    private _keyValuePairs: Array<Object>;
+    private _keyValuePairs: Array<{ key: string; value: string }>;
+    private _body: string;
 
     get type(): HttpType {
         return this._type;
@@ -25,28 +20,12 @@ export default class HttpRequest {
         return this._route;
     }
 
-    get host(): string {
-        return this._host;
+    get body(): string {
+        return this._body;
     }
 
-    get connection(): string {
-        return this._connection;
-    }
-
-    get userAgent(): string {
-        return this._userAgent;
-    }
-
-    get accept(): string {
-        return this._accept;
-    }
-
-    get encoding(): string {
-        return this._encoding;
-    }
-
-    get language(): string {
-        return this._language;
+    getHeader(key: string) {
+        return this._keyValuePairs.find(keyValPair => keyValPair.key === key);
     }
 
     constructor(message: Uint8Array) {
@@ -64,20 +43,12 @@ export default class HttpRequest {
         this._protocol = HttpProtocol[httpStarter[2].replace(/[\/\.]/g, "")];
 
         // Set Header Key Value pairs
+        this._keyValuePairs = [];
         headerValues.forEach(vals => {
             const [key, value] = vals.split(":");
             this._keyValuePairs.push({ key, value });
         });
 
-        console.log(header, body);
+        this._body = body;
     }
 }
-
-// GET /test HTTP/1.1
-// Host: localhost:8080
-// Connection: keep-alive
-// Upgrade-Insecure-Requests: 1
-// User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36
-// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-// Accept-Encoding: gzip, deflate, br
-// Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7

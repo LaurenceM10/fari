@@ -39,7 +39,7 @@ export default class HttpResponse {
     constructor() {}
 
     toResponseString() {
-        return `${this._protocol} ${this._status.split("/")[0]} ${this._status.split("/")[1]}   \r\nContent-Length: ${this._contentLength}\r\n\r\n${
+        return `${this._protocol} ${this._status.split("/")[0]} ${this._status.split("/")[1]}\r\nContent-Length: ${this._contentLength}\r\n\r\n${
             this._content
         }\n`;
     }

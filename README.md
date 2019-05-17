@@ -17,7 +17,7 @@ A [deno](http://deno.land) HTTP/REST server
 -   Non Minimal Features http/1.1
 -   Non Minimal Features http/2
 -   [ ] tests, tests, tests
-    - [ ] Load tests
+    -   [ ] Load tests
 
 ## Disired Usage:
 
@@ -42,35 +42,48 @@ Using TypeScript Decorators (Experimental)
 ```javascript
 import { HttpRoute } from "Fari";
 
-@FariRoute.controller // use case?
-class TestAPI {
-    @FariRoute.get("/test/{id}")
-    async getTest(@FariRoute.urlParameter id: string) {}
+class Test {
+    @FariRoute.get({
+        url: "/test/{0}",
+        urlParameter: [
+            {
+                name: "id",
+                index: 0,
+                mandatory: true,
+                type: "string"
+            }
+        ]
+    })
+    async getTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.put("/demo")
-    async createTest(@FariRoute.body Demo: TestModel) {}
+    @FariRoute.put({
+        url: "/test",
+        body: {
+            type: "TestModel"
+        }
+    })
+    async createTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.post("/demo?ex={ex}")
-    async updateTest(@FariRoute.queryParameter ex: string, @FariRoute.body Demo: TestModel) {}
+    @FariRoute.post({
+        url: "/test?ex={0}",
+        queryParameter: [
+            {
+                name: "ex",
+                mandatory: false,
+                type: "string"
+            }
+        ],
+        body: {
+            type: "TestModel"
+        }
+    })
+    async updateTest(req: HttpRequest, res: HttpResponse) {}
 
-    @FariRoute.delete("/demo/{id}")
-    async deleteTest(@FariRoute.urlParameter id: string) {}
+    @FariRoute.delete({
+        url: "/test/{0}"
+    })
+    async deleteTest(req: HttpRequest, res: HttpResponse) {}
 }
-
-@FariRoute.model  // use case?
-class DemoModel {
-    private _id: number;
-    private _name: string;
-
-    get id(): number { return this._id }
-    get name(): number { return this._name }
-
-    constructor (id: number, name: string){
-        this._id = id;
-        this._name = name;
-    }
-}
-
 ```
 
 Using pure JavaScript
@@ -80,21 +93,20 @@ Using pure JavaScript
 import Fari from "Fari";
 
 (() => {
-    Fari.server.get('/', function (req, res) {
-        res.send('Hello World!')
-    })
+    Fari.server.get("/", function(req, res) {
+        res.send("Hello World!");
+    });
 
-    Fari.server.post('/', function (req, res) {
-        res.send('Got a POST request')
-    })
+    Fari.server.post("/", function(req, res) {
+        res.send("Got a POST request");
+    });
 
-    Fari.server.put('/user', function (req, res) {
-        res.send('Got a PUT request at /user')
-    })
+    Fari.server.put("/user", function(req, res) {
+        res.send("Got a PUT request at /user");
+    });
 
-    Fari.server.delete('/user', function (req, res) {
-        res.send('Got a DELETE request at /user')
-    })
-
-})()
+    Fari.server.delete("/user", function(req, res) {
+        res.send("Got a DELETE request at /user");
+    });
+})();
 ```
