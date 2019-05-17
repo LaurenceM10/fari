@@ -1,3 +1,3 @@
-export { default as FariRoute } from "./types/decorator/HttpRoute.ts";
-import Fari from "./types/Server.ts";
+export { default as FariRoute } from "./src/decorator/HttpRoute.ts";
+import Fari from "./src/Server.ts";
 export default Fari;

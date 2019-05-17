@@ -25,7 +25,7 @@ export class Server {
     async handleRequest(request: HttpRequest, response: HttpResponse): Promise<void> {
         response.protocol = request.protocol;
         response.status = HttpCode.OK;
-        response.content = "OK";
+        response.content = JSON.stringify({ status: "Not implemented" });
     }
 
     get(url: string, func: Function, httpParameters?: any): void {
