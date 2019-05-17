@@ -1,11 +1,15 @@
 # Fari.js
 
-A [deno](http://deno.land) HTTP/REST server
+A [deno](http://deno.land) HTTP/REST server, implemented in TypeScript.
+
+## Status
+
+Not Production Ready
 
 ## TO DO (Sorted by prio):
 
 -   [x] Minimal http features
--   [ ] handling Routes
+-   [X] handling Routes
 -   Minimal Feature list http/1.1
     -   [ ] RFC 7230: Message syntax and routing
     -   [ ] RFC 7231: Semantics and Content
