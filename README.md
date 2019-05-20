@@ -10,6 +10,7 @@ Not Production Ready
 
 -   [x] Minimal http features
 -   [ ] handling Routes
+    -   [ ] static routes
 -   Minimal Feature list http/1.1
     -   [ ] RFC 7230: Message syntax and routing
     -   [ ] RFC 7231: Semantics and Content
