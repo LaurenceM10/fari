@@ -1,4 +1,5 @@
 import HttpType from "./HttpType.ts";
+import RouteParameters from "../common/RouteParameters.ts";
 
 export default class HttpEndPoint {
     private _url: string;
